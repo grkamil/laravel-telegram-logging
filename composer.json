@@ -1,5 +1,5 @@
 {
-  "name": "GrKamil/laravel-telegram-logging",
+  "name": "grkamil/laravel-telegram-logging",
   "autoload": {
     "psr-0" : {
       "Logger\\" : "src"
