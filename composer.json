@@ -10,7 +10,7 @@
     "monolog/monolog": "^1.23",
     "laravel/framework": "5.6.*|5.7.*"
   },
-  "version":"0.1.0",
+  "version":"0.1.1",
   "minimum-stability": "dev",
   "prefer-stable": true
 }
