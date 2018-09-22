@@ -21,7 +21,7 @@ class TelegramLogger
         return new Logger(
             env('APP_NAME'),
             [
-                new TelegramHandler()
+                new TelegramHandler($config['level'])
             ]
         );
     }

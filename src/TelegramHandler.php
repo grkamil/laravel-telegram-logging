@@ -44,8 +44,10 @@ class TelegramHandler extends AbstractProcessingHandler
      * TelegramHandler constructor.
      * @param int $level
      */
-    public function __construct($level = Logger::DEBUG)
+    public function __construct($level)
     {
+        $level = Logger::toMonologLevel($level);
+
         parent::__construct($level, true);
 
         // define variables for making Telegram request
