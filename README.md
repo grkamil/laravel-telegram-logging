@@ -42,6 +42,11 @@ Or you can simply change the default log channel in the .env
 LOG_CHANNEL=telegram
 ```
 
+Publish config file
+```
+php artisan vendor:publish --provider "Logger\TelegramLoggerServiceProvider"
+```
+
 ## Create bot
 
 For using this package you need to create Telegram bot
