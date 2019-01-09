@@ -19,7 +19,7 @@ class TelegramLogger
     public function __invoke(array $config)
     {
         return new Logger(
-            env('APP_NAME'),
+            config('app.name'),
             [
                 new TelegramHandler($config['level'])
             ]

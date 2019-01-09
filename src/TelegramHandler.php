@@ -51,8 +51,8 @@ class TelegramHandler extends AbstractProcessingHandler
         parent::__construct($level, true);
 
         // define variables for making Telegram request
-        $this->botToken = env('TELEGRAM_LOGGER_BOT_TOKEN');
-        $this->chatId   = env('TELEGRAM_LOGGER_CHAT_ID');
+        $this->botToken = config('telegram-logger.token');
+        $this->chatId   = config('telegram-logger.chat_id');
 
         // define variables for text message
         $this->appName = config('app.name');
