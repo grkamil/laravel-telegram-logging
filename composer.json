@@ -1,5 +1,7 @@
 {
   "name": "grkamil/laravel-telegram-logging",
+  "description": "Send logs to Telegram chat via Telegram bot",
+  "license": "MIT",
   "autoload": {
     "psr-0" : {
       "Logger\\" : "src"
