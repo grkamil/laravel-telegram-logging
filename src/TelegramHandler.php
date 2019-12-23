@@ -62,7 +62,7 @@ class TelegramHandler extends AbstractProcessingHandler
     /**
      * @param array $record
      */
-    public function write(array $record)
+    public function write(array $record): void
     {
         if(!$this->botToken || !$this->chatId) {
             return;
