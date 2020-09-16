@@ -65,7 +65,7 @@ class TelegramHandler extends AbstractProcessingHandler
     public function write(array $record): void
     {
         if(!$this->botToken || !$this->chatId) {
-            return;
+            throw new \InvalidArgumentException('Bot token or chat id is not defined for Telegram logger');
         }
 
         // trying to make request and send notification
@@ -79,7 +79,7 @@ class TelegramHandler extends AbstractProcessingHandler
                 ])
             );
         } catch (Exception $exception) {
-
+            \Log::channel('single')->error($exception->getMessage());
         }
     }
 
