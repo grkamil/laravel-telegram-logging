@@ -47,6 +47,22 @@ Publish config file
 php artisan vendor:publish --provider "Logger\TelegramLoggerServiceProvider"
 ```
 
+## Telegram Logging Formats
+
+In version 1.3.3 a new Logging Format Engine based on blade templates has been introduced. 
+While off the shelf the behavior is exactly the same as before, you can choose among two different formats
+that you can specify in the `.env` file like this :
+
+```
+# Use a minimal log template
+TELEGRAM_LOGGER_TEMPLATE = laravel-telegram-logging::minimal
+
+# Or use the backward compatible one (default setting used even without inserting this row)
+TELEGRAM_LOGGER_TEMPLATE = laravel-telegram-logging::standard
+```
+
+It is possible to create other blade templates and reference them in the `TELEGRAM_LOGGER_TEMPLATE` entry 
+
 ## Create bot
 
 For using this package you need to create Telegram bot
