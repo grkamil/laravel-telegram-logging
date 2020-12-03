@@ -49,9 +49,7 @@ php artisan vendor:publish --provider "Logger\TelegramLoggerServiceProvider"
 
 ## Telegram Logging Formats
 
-In version 1.3.3 a new Logging Format Engine based on blade templates has been introduced. 
-While off the shelf the behavior is exactly the same as before, you can choose among two different formats
-that you can specify in the `.env` file like this :
+You can choose among two different formats that you can specify in the `.env` file like this :
 
 ```
 # Use a minimal log template
