@@ -3,6 +3,8 @@
 namespace Logger;
 
 use Exception;
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
 
@@ -41,6 +43,13 @@ class TelegramHandler extends AbstractProcessingHandler
     private $appEnv;
 
     /**
+     * Blade template reference to be used by Logs
+     * 
+     * @string
+     */
+    private $template;
+
+    /**
      * TelegramHandler constructor.
      * @param int $level
      */
@@ -53,6 +62,7 @@ class TelegramHandler extends AbstractProcessingHandler
         // define variables for making Telegram request
         $this->botToken = config('telegram-logger.token');
         $this->chatId   = config('telegram-logger.chat_id');
+        $this->template = config('telegram-logger.template');
 
         // define variables for text message
         $this->appName = config('app.name');
@@ -73,7 +83,7 @@ class TelegramHandler extends AbstractProcessingHandler
             file_get_contents(
                 'https://api.telegram.org/bot' . $this->botToken . '/sendMessage?'
                 . http_build_query([
-                    'text' => $this->formatText($record['formatted'], $record['level_name']),
+                    'text' => $this->formatText($record),
                     'chat_id' => $this->chatId,
                     'parse_mode' => 'html'
                 ])
@@ -84,12 +94,24 @@ class TelegramHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param string $text
-     * @param string $level
+     * {@inheritDoc}
+     */
+    protected function getDefaultFormatter(): FormatterInterface
+    {
+        return new LineFormatter("%message% %context% %extra%\n");
+    }
+
+    /**
+     * @param array $record
      * @return string
      */
-    private function formatText(string $text, string $level): string
+    private function formatText(array $record): string
     {
-        return '<b>' . $this->appName .  '</b> (' . $level . ')' . PHP_EOL  . 'Env: ' . $this->appEnv . PHP_EOL . $text;
+
+        return view($this->template, array_merge($record,[
+            'appName' => $this->appName,
+            'appEnv'  => $this->appEnv,
+            ])
+        );
     }
 }
