@@ -83,7 +83,7 @@ class TelegramHandler extends AbstractProcessingHandler
             file_get_contents(
                 'https://api.telegram.org/bot' . $this->botToken . '/sendMessage?'
                 . http_build_query([
-                    'text' => $this->formatText($record),
+                    'text' => $this->applyTelegramMaxCharactersLimit($this->formatText($record)),
                     'chat_id' => $this->chatId,
                     'parse_mode' => 'html'
                 ])
@@ -113,5 +113,14 @@ class TelegramHandler extends AbstractProcessingHandler
             'appEnv'  => $this->appEnv,
             ])
         );
+    }
+
+    /**
+     * @param string $text
+     * @return string
+     */
+    private function applyTelegramMaxCharactersLimit(string $text): string
+    {
+        return mb_substr($text, 0, 4096);
     }
 }
