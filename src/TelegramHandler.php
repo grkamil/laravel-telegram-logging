@@ -80,14 +80,11 @@ class TelegramHandler extends AbstractProcessingHandler
 
         // trying to make request and send notification
         try {
-            file_get_contents(
-                'https://api.telegram.org/bot' . $this->botToken . '/sendMessage?'
-                . http_build_query([
-                    'text' => $this->applyTelegramMaxCharactersLimit($this->formatText($record)),
-                    'chat_id' => $this->chatId,
-                    'parse_mode' => 'html'
-                ])
-            );
+            $textChunks = str_split($this->formatText($record), 4096);
+
+            foreach ($textChunks as $textChunk) {
+                $this->sendMessage($textChunk);
+            }
         } catch (Exception $exception) {
             \Log::channel('single')->error($exception->getMessage());
         }
@@ -107,7 +104,6 @@ class TelegramHandler extends AbstractProcessingHandler
      */
     private function formatText(array $record): string
     {
-
         return view($this->template, array_merge($record,[
             'appName' => $this->appName,
             'appEnv'  => $this->appEnv,
@@ -116,11 +112,16 @@ class TelegramHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param string $text
-     * @return string
+     * @param  string  $text
      */
-    private function applyTelegramMaxCharactersLimit(string $text): string
+    private function sendMessage(string $text): void
     {
-        return mb_substr($text, 0, 4096);
+        $httpQuery = http_build_query([
+            'text' => $text,
+            'chat_id' => $this->chatId,
+            'parse_mode' => 'html',
+        ]);
+
+        file_get_contents('https://api.telegram.org/bot'.$this->botToken.'/sendMessage?' . $httpQuery);
     }
 }
