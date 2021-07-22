@@ -95,7 +95,7 @@ class TelegramHandler extends AbstractProcessingHandler
      */
     protected function getDefaultFormatter(): FormatterInterface
     {
-        return new LineFormatter("%message% %context% %extra%\n");
+        return new LineFormatter("%message% %context% %extra%\n", null, false, true);
     }
 
     /**
