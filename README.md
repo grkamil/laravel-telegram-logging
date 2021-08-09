@@ -77,7 +77,7 @@ For using this package you need to create Telegram bot
 ```php
 config(['telegram-logger.template'=>'laravel-telegram-logging::custom'])
 ```
-2. Call `Logger` as usual.
+2. Use `Log` as usual.
 
 ## Lumen support
 
