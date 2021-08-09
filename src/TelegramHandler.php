@@ -43,13 +43,6 @@ class TelegramHandler extends AbstractProcessingHandler
     private $appEnv;
 
     /**
-     * Blade template reference to be used by Logs
-     * 
-     * @string
-     */
-    private $template;
-
-    /**
      * TelegramHandler constructor.
      * @param int $level
      */
@@ -62,7 +55,6 @@ class TelegramHandler extends AbstractProcessingHandler
         // define variables for making Telegram request
         $this->botToken = config('telegram-logger.token');
         $this->chatId   = config('telegram-logger.chat_id');
-        $this->template = config('telegram-logger.template');
 
         // define variables for text message
         $this->appName = config('app.name');
@@ -104,7 +96,7 @@ class TelegramHandler extends AbstractProcessingHandler
      */
     private function formatText(array $record): string
     {
-        return view($this->template, array_merge($record,[
+        return view(config('telegram-logger.template'), array_merge($record,[
             'appName' => $this->appName,
             'appEnv'  => $this->appEnv,
             ])
