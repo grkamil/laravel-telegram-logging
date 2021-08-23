@@ -42,7 +42,7 @@ Or you can simply change the default log channel in the .env
 LOG_CHANNEL=telegram
 ```
 
-Publish config file
+Publish config file and views
 ```
 php artisan vendor:publish --provider "Logger\TelegramLoggerServiceProvider"
 ```
@@ -70,6 +70,14 @@ For using this package you need to create Telegram bot
 3. Set up name and bot-name for your bot.
 4. Get token and add it to your .env file (it is written above)
 5. Go to your bot and send ``/start`` message
+
+## Change log template at runtime
+
+1. Change config for template.
+```php
+config(['telegram-logger.template'=>'laravel-telegram-logging::custom'])
+```
+2. Use `Log` as usual.
 
 ## Lumen support
 
