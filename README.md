@@ -79,6 +79,32 @@ config(['telegram-logger.template'=>'laravel-telegram-logging::custom'])
 ```
 2. Use `Log` as usual.
 
+## Configuring a different chat id or token per channel
+
+1. Add `chat_id` or `token` to channels in `config/logging.php`.  Overrides `config('telegram.chat_id')`.
+```php
+[
+    'channels' => [
+        [
+            'company' => [
+                'driver' => 'custom',
+                'via' => TelegramLogger::class,
+                'chat_id' => env('TELEGRAM_COMPANY_CHAT_ID'),
+                'token' => env('TELEGRAM_COMPANY_BOT_TOKEN')
+            ],
+
+            'operations' => [
+                'driver' => 'custom',
+                'via' => TelegramLogger::class,
+                'chat_id' => env('TELEGRAM_OPERATIONS_CHAT_ID'),
+                'token' => env('TELEGRAM_OPERATIONS_BOT_TOKEN')
+            ]
+        ]
+    ]
+]
+```
+
+2. Use `Log` as usual.
 ## Lumen support
 
 To make it work with Lumen, you need also run two steps:

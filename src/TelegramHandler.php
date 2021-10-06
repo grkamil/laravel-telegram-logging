@@ -15,6 +15,13 @@ use Monolog\Handler\AbstractProcessingHandler;
 class TelegramHandler extends AbstractProcessingHandler
 {
     /**
+     * Logger config
+     * 
+     * @var array
+     */
+    private $config;
+
+    /**
      * Bot API token
      *
      * @var string
@@ -46,15 +53,16 @@ class TelegramHandler extends AbstractProcessingHandler
      * TelegramHandler constructor.
      * @param int $level
      */
-    public function __construct($level)
+    public function __construct(array $config)
     {
-        $level = Logger::toMonologLevel($level);
+        $level = Logger::toMonologLevel($config['level']);
 
         parent::__construct($level, true);
 
         // define variables for making Telegram request
-        $this->botToken = config('telegram-logger.token');
-        $this->chatId   = config('telegram-logger.chat_id');
+        $this->config = $config;
+        $this->botToken = $this->getConfigValue('token');
+        $this->chatId   = $this->getConfigValue('chat_id');
 
         // define variables for text message
         $this->appName = config('app.name');
@@ -115,5 +123,19 @@ class TelegramHandler extends AbstractProcessingHandler
         ]);
 
         file_get_contents('https://api.telegram.org/bot'.$this->botToken.'/sendMessage?' . $httpQuery);
+    }
+
+    /**
+     * @param string $key
+     * @param string $defaultConfigKey
+     * @return string
+     */
+    private function getConfigValue($key, $defaultConfigKey = null): string
+    {
+        if (isset($this->config[$key])) {
+            return $this->config[$key];
+        }
+        
+        return config($defaultConfigKey ?: "telegram-logger.$key");
     }
 }
