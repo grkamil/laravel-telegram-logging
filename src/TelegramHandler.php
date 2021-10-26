@@ -104,11 +104,15 @@ class TelegramHandler extends AbstractProcessingHandler
      */
     private function formatText(array $record): string
     {
-        return view(config('telegram-logger.template'), array_merge($record,[
-            'appName' => $this->appName,
-            'appEnv'  => $this->appEnv,
-            ])
-        );
+        if ($template = config('telegram-logger.template')) {
+            return view($template, array_merge($record, [
+                    'appName' => $this->appName,
+                    'appEnv'  => $this->appEnv,
+                ])
+            );
+        }
+
+        return sprintf("<b>%s</b> (%s)\n%s", $this->appName, $record['level_name'], $record['formatted']);
     }
 
     /**

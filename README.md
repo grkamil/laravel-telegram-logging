@@ -90,14 +90,16 @@ config(['telegram-logger.template'=>'laravel-telegram-logging::custom'])
                 'driver' => 'custom',
                 'via' => TelegramLogger::class,
                 'chat_id' => env('TELEGRAM_COMPANY_CHAT_ID'),
-                'token' => env('TELEGRAM_COMPANY_BOT_TOKEN')
+                'token' => env('TELEGRAM_COMPANY_BOT_TOKEN'),
+                'level' => 'debug'
             ],
 
             'operations' => [
                 'driver' => 'custom',
                 'via' => TelegramLogger::class,
                 'chat_id' => env('TELEGRAM_OPERATIONS_CHAT_ID'),
-                'token' => env('TELEGRAM_OPERATIONS_BOT_TOKEN')
+                'token' => env('TELEGRAM_OPERATIONS_BOT_TOKEN'),
+                'level' => 'debug'
             ]
         ]
     ]
@@ -118,7 +120,11 @@ return [
     'token' => env('TELEGRAM_LOGGER_BOT_TOKEN'),
 
     // Telegram chat id
-    'chat_id' => env('TELEGRAM_LOGGER_CHAT_ID')
+    'chat_id' => env('TELEGRAM_LOGGER_CHAT_ID'),
+    
+    // you can define your custom template for message
+    // e.g: logging.template
+    // 'template' => 'some your view path'
 ];
 ```
 
