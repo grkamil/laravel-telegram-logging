@@ -126,7 +126,7 @@ class TelegramHandler extends AbstractProcessingHandler
                 'chat_id' => $this->chatId,
                 'parse_mode' => 'html',
             ],
-            config('telegram-logger.template', [])
+            config('telegram-logger.options', [])
         ));
 
         file_get_contents('https://api.telegram.org/bot'.$this->botToken.'/sendMessage?' . $httpQuery);
