@@ -120,11 +120,14 @@ class TelegramHandler extends AbstractProcessingHandler
      */
     private function sendMessage(string $text): void
     {
-        $httpQuery = http_build_query([
-            'text' => $text,
-            'chat_id' => $this->chatId,
-            'parse_mode' => 'html',
-        ]);
+        $httpQuery = http_build_query(array_merge(
+            [
+                'text' => $text,
+                'chat_id' => $this->chatId,
+                'parse_mode' => 'html',
+            ],
+            config('telegram-logger.options', [])
+        ));
 
         file_get_contents('https://api.telegram.org/bot'.$this->botToken.'/sendMessage?' . $httpQuery);
     }
