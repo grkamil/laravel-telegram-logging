@@ -130,3 +130,9 @@ return [
 
 2. Uncomment ```$app->withFacades();``` and configure the file ```$app->configure('telegram-logger');``` at bootstrap/app.php
 3. Place default Laravel/Lumen logging file to config/logging.php (to add new channel).
+
+## Proxy support
+To use a proxy server, set the variable in the .env
+```
+TELEGRAM_LOGGER_PROXY=proxy_server.com:port
+```

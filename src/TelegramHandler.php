@@ -129,7 +129,20 @@ class TelegramHandler extends AbstractProcessingHandler
             config('telegram-logger.options', [])
         ));
 
-        file_get_contents('https://api.telegram.org/bot'.$this->botToken.'/sendMessage?' . $httpQuery);
+        $url = 'https://api.telegram.org/bot' . $this->botToken . '/sendMessage?' . $httpQuery;
+
+        $proxy = $this->getConfigValue('proxy');
+
+        if (!empty($proxy)) {
+            $context = stream_context_create([
+                'http' => [
+                    'proxy' => $proxy,
+                ]
+            ]);
+            file_get_contents($url, false, $context);
+        } else {
+            file_get_contents($url);
+        }
     }
 
     /**
