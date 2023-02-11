@@ -10,6 +10,9 @@ return [
     // Blade Template to use formatting logs
     'template' => env('TELEGRAM_LOGGER_TEMPLATE', 'laravel-telegram-logging::standard'),
 
+    // Proxy server
+    'proxy' => env('TELEGRAM_LOGGER_PROXY'),
+
     // Telegram sendMessage options: https://core.telegram.org/bots/api#sendmessage
     'options' => [
         // 'parse_mode' => 'html',
