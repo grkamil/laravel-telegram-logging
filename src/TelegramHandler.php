@@ -150,7 +150,7 @@ class TelegramHandler extends AbstractProcessingHandler
      * @param string $defaultConfigKey
      * @return string
      */
-    private function getConfigValue($key, $defaultConfigKey = null): string
+    private function getConfigValue($key, $defaultConfigKey = null): ?string
     {
         if (isset($this->config[$key])) {
             return $this->config[$key];
