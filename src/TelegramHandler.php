@@ -3,10 +3,12 @@
 namespace Logger;
 
 use Exception;
+use Illuminate\View\View;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\LogRecord;
 
 /**
  * Class TelegramHandler
@@ -16,7 +18,7 @@ class TelegramHandler extends AbstractProcessingHandler
 {
     /**
      * Logger config
-     * 
+     *
      * @var array
      */
     private $config;
@@ -60,7 +62,7 @@ class TelegramHandler extends AbstractProcessingHandler
         parent::__construct($level, true);
 
         // define variables for making Telegram request
-        $this->config = $config;
+        $this->config   = $config;
         $this->botToken = $this->getConfigValue('token');
         $this->chatId   = $this->getConfigValue('chat_id');
 
@@ -72,9 +74,9 @@ class TelegramHandler extends AbstractProcessingHandler
     /**
      * @param array $record
      */
-    public function write(array $record): void
+    public function write($record): void
     {
-        if(!$this->botToken || !$this->chatId) {
+        if (!$this->botToken || !$this->chatId) {
             throw new \InvalidArgumentException('Bot token or chat id is not defined for Telegram logger');
         }
 
@@ -99,31 +101,40 @@ class TelegramHandler extends AbstractProcessingHandler
     }
 
     /**
-     * @param array $record
+     * @param $record
      * @return string
      */
-    private function formatText(array $record): string
+    private function formatText($record): string
     {
         if ($template = config('telegram-logger.template')) {
+            if ($record instanceof LogRecord) {
+                return view($template, array_merge($record->toArray(), [
+                        'appName'   => $this->appName,
+                        'appEnv'    => $this->appEnv,
+                        'formatted' => $record->formatted,
+                    ])
+                )->render();
+            }
+
             return view($template, array_merge($record, [
                     'appName' => $this->appName,
                     'appEnv'  => $this->appEnv,
                 ])
-            );
+            )->render();
         }
 
         return sprintf("<b>%s</b> (%s)\n%s", $this->appName, $record['level_name'], $record['formatted']);
     }
 
     /**
-     * @param  string  $text
+     * @param string $text
      */
     private function sendMessage(string $text): void
     {
         $httpQuery = http_build_query(array_merge(
             [
-                'text' => $text,
-                'chat_id' => $this->chatId,
+                'text'       => $text,
+                'chat_id'    => $this->chatId,
                 'parse_mode' => 'html',
             ],
             config('telegram-logger.options', [])
@@ -137,7 +148,7 @@ class TelegramHandler extends AbstractProcessingHandler
             $context = stream_context_create([
                 'http' => [
                     'proxy' => $proxy,
-                ]
+                ],
             ]);
             file_get_contents($url, false, $context);
         } else {
@@ -155,7 +166,7 @@ class TelegramHandler extends AbstractProcessingHandler
         if (isset($this->config[$key])) {
             return $this->config[$key];
         }
-        
+
         return config($defaultConfigKey ?: "telegram-logger.$key");
     }
 }
