@@ -13,6 +13,9 @@ return [
     // Proxy server
     'proxy' => env('TELEGRAM_LOGGER_PROXY', ''),
 
+    // Telegram API host without trailling slash
+    'api_host' => env('TELEGRAM_LOGGER_API_HOST', 'https://api.telegram.org'),
+
     // Telegram sendMessage options: https://core.telegram.org/bots/api#sendmessage
     'options' => [
         // 'parse_mode' => 'html',
