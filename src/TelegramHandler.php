@@ -141,10 +141,10 @@ class TelegramHandler extends AbstractProcessingHandler
     {
         $httpQuery = http_build_query(array_merge(
             [
-                'text'              => $text,
-                'chat_id'           => $this->chatId,
-                'message_thead_id'  => $this->messageThreadId,
-                'parse_mode'        => 'html',
+                'text'               => $text,
+                'chat_id'            => $this->chatId,
+                'message_thread_id'  => $this->messageThreadId,
+                'parse_mode'         => 'html',
             ],
             config('telegram-logger.options', [])
         ));

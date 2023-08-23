@@ -8,7 +8,7 @@ return [
     'chat_id' => env('TELEGRAM_LOGGER_CHAT_ID'),
 
     // Telegram message thread id
-    'message_thread_id' => env('TELEGRAM_LOGGER_MESSAGE_THEAD_ID', null),
+    'message_thread_id' => env('TELEGRAM_LOGGER_MESSAGE_THREAD_ID', null),
 
     // Blade Template to use formatting logs
     'template' => env('TELEGRAM_LOGGER_TEMPLATE', 'laravel-telegram-logging::standard'),
