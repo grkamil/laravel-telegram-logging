@@ -7,7 +7,7 @@ return [
     // Telegram chat id
     'chat_id' => env('TELEGRAM_LOGGER_CHAT_ID'),
 
-    // Telegram chat id
+    // Telegram message thread id
     'message_thread_id' => env('TELEGRAM_LOGGER_MESSAGE_THEAD_ID', null),
 
     // Blade Template to use formatting logs

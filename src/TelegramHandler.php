@@ -69,10 +69,10 @@ class TelegramHandler extends AbstractProcessingHandler
         parent::__construct($level, true);
 
         // define variables for making Telegram request
-        $this->config   = $config;
-        $this->botToken = $this->getConfigValue('token');
-        $this->chatId   = $this->getConfigValue('chat_id');
-        $this->messageThreadId   = $this->getConfigValue('message_thread_id');
+        $this->config           = $config;
+        $this->botToken         = $this->getConfigValue('token');
+        $this->chatId           = $this->getConfigValue('chat_id');
+        $this->messageThreadId  = $this->getConfigValue('message_thread_id');
 
         // define variables for text message
         $this->appName = config('app.name');
