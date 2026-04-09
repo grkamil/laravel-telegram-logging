@@ -3,6 +3,7 @@
 namespace Logger;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
@@ -96,7 +97,7 @@ class TelegramHandler extends AbstractProcessingHandler
                 $this->sendMessage($textChunk);
             }
         } catch (Exception $exception) {
-            \Log::channel('single')->error($exception->getMessage());
+            Log::channel('single')->error($exception->getMessage());
         }
     }
 
