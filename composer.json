@@ -1,5 +1,5 @@
 {
-    "name": "grkamil/laravel-telegram-logging",
+    "name": "search2074/laravel-telegram-logging",
     "description": "Send logs to Telegram chat via Telegram bot",
     "license": "MIT",
     "autoload": {
