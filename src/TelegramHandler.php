@@ -155,16 +155,19 @@ class TelegramHandler extends AbstractProcessingHandler
 
         $proxy = $this->getConfigValue('proxy');
 
+        $httpOptions = [
+            'timeout' => (float) $this->getConfigValue('timeout'),
+        ];
+
         if (!empty($proxy)) {
-            $context = stream_context_create([
-                'http' => [
-                    'proxy' => $proxy,
-                ],
-            ]);
-            file_get_contents($url, false, $context);
-        } else {
-            file_get_contents($url);
+            $httpOptions['proxy'] = $proxy;
         }
+
+        $context = stream_context_create([
+            'http' => $httpOptions,
+        ]);
+
+        file_get_contents($url, false, $context);
     }
 
     /**

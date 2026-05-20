@@ -19,6 +19,9 @@ return [
     // Telegram API host without trailling slash
     'api_host' => env('TELEGRAM_LOGGER_API_HOST', 'https://api.telegram.org'),
 
+    // Telegram API request timeout in seconds
+    'timeout' => env('TELEGRAM_LOGGER_TIMEOUT', 5.5),
+
     // Telegram sendMessage options: https://core.telegram.org/bots/api#sendmessage
     'options' => [
         // 'parse_mode' => 'html',
