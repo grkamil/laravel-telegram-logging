@@ -81,7 +81,7 @@ config(['telegram-logger.template'=>'laravel-telegram-logging::custom'])
 
 ## Configuring a different chat id or token per channel
 
-1. Add `chat_id` or `token` to channels in `config/logging.php`.  Overrides `config('telegram.chat_id')`.
+1. Add `chat_id`, `token` or `timeout` to channels in `config/logging.php`.  Overrides `config('telegram.chat_id')`.
 ```php
 [
     'channels' => [
@@ -121,6 +121,9 @@ return [
 
     // Telegram chat id
     'chat_id' => env('TELEGRAM_LOGGER_CHAT_ID'),
+
+    // Telegram API request timeout in seconds
+    'timeout' => env('TELEGRAM_LOGGER_TIMEOUT', 5.5),
     
     // you can define your custom template for message
     // e.g: logging.template
@@ -135,4 +138,10 @@ return [
 To use a proxy server, set the variable in the .env
 ```
 TELEGRAM_LOGGER_PROXY=proxy_server.com:port
+```
+
+## Request timeout
+Telegram API requests use a 10 second timeout by default. To change it, set the variable in the .env
+```
+TELEGRAM_LOGGER_TIMEOUT=5
 ```
